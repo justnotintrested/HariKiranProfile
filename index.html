@@ -6,31 +6,50 @@
   <title>Hari Kiran K – Interactive Resume</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: 'Roboto Mono', monospace;
       background: linear-gradient(135deg, #e0eafc, #cfdef3);
       color: #222;
+      overflow-x: hidden;
     }
     header {
       background: linear-gradient(135deg, #c1c8ff, #c6f3f1);
       padding: 2rem;
       text-align: center;
       border-bottom: 2px solid #ddd;
+      animation: fadeIn 1.2s ease-out;
     }
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.5rem;
+      animation: slideDown 1s ease-out;
     }
     header p {
       margin: 0.5rem 0;
+      animation: fadeIn 1.4s ease-out;
     }
     section {
       padding: 2rem;
       border-bottom: 1px solid #eee;
+      animation: fadeIn 1.6s ease-out;
     }
     h2 {
       color: #5b5fc7;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      height: 4px;
+      width: 60px;
+      background: linear-gradient(90deg, lavender, teal);
+      border-radius: 2px;
     }
     ul {
       list-style-type: square;
@@ -46,6 +65,31 @@
       font-size: 0.9rem;
       color: #555;
     }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animated-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-in-out;
+    }
+    .animated-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -56,13 +100,13 @@
     <p><a href="https://www.linkedin.com/in/hari-kiran-k-438052243">LinkedIn Profile</a></p>
   </header>
 
-  <section>
+  <section class="animated-section">
     <h2>Education</h2>
     <p><strong>PES University</strong> (2022–present) – B.Tech in CSE – CGPA: 8.12</p>
     <p><strong>JNV</strong> (2016–2022) – 12th PCMC – 89.3%</p>
   </section>
 
-  <section>
+  <section class="animated-section">
     <h2>Experience</h2>
     <p><strong>Swajyoth Technologies Pvt. Ltd</strong> – Intern (June–Aug 2024)</p>
     <ul>
@@ -71,13 +115,13 @@
     </ul>
   </section>
 
-  <section>
+  <section class="animated-section">
     <h2>Skills</h2>
     <p><strong>Languages:</strong> C++, C, Python, Go, R, HTML & CSS, MySQL</p>
     <p><strong>Technologies:</strong> ML, Big Data, Analytics, DBMS, Map-Reduce</p>
   </section>
 
-  <section>
+  <section class="animated-section">
     <h2>Projects</h2>
     <div class="project">
       <strong>Distributed File Orchestration</strong>
@@ -97,7 +141,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="animated-section">
     <h2>Certification</h2>
     <ul>
       <li>Problem Solving (Intermediate) – Python – HackerRank</li>
@@ -108,5 +152,17 @@
     &copy; 2025 Hari Kiran K. All rights reserved.
   </footer>
 
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+    document.querySelectorAll('.animated-section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>

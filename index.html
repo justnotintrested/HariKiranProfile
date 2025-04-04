@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hari Kiran K – Interactive Resume</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg-light: #e0eafc;
+      --bg-dark: #0d1117;
+      --text-light: #222;
+      --text-dark: #eee;
     }
     body {
       margin: 0;
       font-family: 'Roboto Mono', monospace;
-      background: linear-gradient(135deg, #e0eafc, #cfdef3);
-      color: #222;
+      background: linear-gradient(135deg, var(--bg-light), #cfdef3);
+      color: var(--text-light);
       overflow-x: hidden;
+      transition: all 0.4s ease;
+    }
+    body.dark {
+      background: linear-gradient(135deg, #0d1117, #1e1e2f);
+      color: var(--text-dark);
     }
     #tsparticles {
       position: fixed;
@@ -25,6 +33,18 @@
       width: 100%;
       height: 100%;
       z-index: -1;
+    }
+    .toggle-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #5b5fc7;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
     }
     header {
       background: linear-gradient(135deg, #c1c8ff, #c6f3f1);
@@ -37,6 +57,12 @@
       margin: 0;
       font-size: 2.5rem;
       animation: slideDown 1s ease-out;
+    }
+    header h1::after {
+      content: '|';
+      animation: typing 2s steps(20) infinite;
+      display: inline-block;
+      margin-left: 5px;
     }
     header p {
       margin: 0.5rem 0;
@@ -82,14 +108,6 @@
     a:hover {
       text-decoration: underline;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideDown {
-      from { transform: translateY(-20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
     .animated-section {
       opacity: 0;
       transform: translateY(20px);
@@ -104,10 +122,24 @@
       max-width: 600px;
       margin: 2rem auto;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes typing {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
   <div id="tsparticles"></div>
+  <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
   <header>
     <h1>Hari Kiran K</h1>
     <p>ML | Big Data | Full Stack Developer</p>
@@ -173,60 +205,73 @@
   </footer>
 
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+    let currentParticles;
+    const lightColors = ["#7e57c2", "#26c6da"];
+    const darkColors = ["#c1c8ff", "#b3f1f0"];
+
+    function loadParticles(colors) {
+      if (currentParticles) currentParticles.destroy();
+      tsParticles.load("tsparticles", {
+        fullScreen: { enable: false },
+        background: { color: "transparent" },
+        particles: {
+          number: { value: 50 },
+          color: { value: colors },
+          shape: { type: "circle" },
+          opacity: { value: 0.5 },
+          size: { value: 3 },
+          move: { enable: true, speed: 1 }
+        },
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: "repulse" },
+            resize: true
+          },
+          modes: { repulse: { distance: 80 } }
+        },
+        detectRetina: true
+      }).then((container) => currentParticles = container);
+    }
+
+    function toggleDarkMode() {
+      const isDark = document.body.classList.toggle("dark");
+      loadParticles(isDark ? darkColors : lightColors);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadParticles(lightColors);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      });
+
+      document.querySelectorAll('.animated-section').forEach(section => {
+        observer.observe(section);
+      });
+
+      const ctx = document.getElementById('skillsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Python', 'C++', 'MySQL', 'ML', 'Big Data', 'Web Dev'],
+          datasets: [{
+            label: 'Skill Level',
+            data: [9, 8, 8, 9, 8, 7],
+            backgroundColor: 'rgba(138, 180, 248, 0.2)',
+            borderColor: '#5b5fc7',
+            pointBackgroundColor: '#5b5fc7',
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { r: { suggestedMin: 0, suggestedMax: 10 } }
         }
       });
-    });
-    document.querySelectorAll('.animated-section').forEach(section => {
-      observer.observe(section);
-    });
-
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: false },
-      background: {
-        color: "transparent"
-      },
-      particles: {
-        number: { value: 50 },
-        color: { value: ["#c1c8ff", "#b3f1f0"] },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3 },
-        move: { enable: true, speed: 1 }
-      },
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: "repulse" },
-          resize: true
-        },
-        modes: {
-          repulse: { distance: 80 }
-        }
-      },
-      detectRetina: true
-    });
-
-    const ctx = document.getElementById('skillsChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: ['Python', 'C++', 'MySQL', 'ML', 'Big Data', 'Web Dev'],
-        datasets: [{
-          label: 'Skill Level',
-          data: [9, 8, 8, 9, 8, 7],
-          backgroundColor: 'rgba(138, 180, 248, 0.2)',
-          borderColor: '#5b5fc7',
-          pointBackgroundColor: '#5b5fc7',
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { r: { suggestedMin: 0, suggestedMax: 10 } }
-      }
     });
   </script>
 </body>

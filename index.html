@@ -3,35 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name - Interactive Resume</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Hari Kiran K – Interactive Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      color: #222;
+    }
+    header {
+      background: linear-gradient(135deg, #c1c8ff, #c6f3f1);
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 2px solid #ddd;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin: 0.5rem 0;
+    }
+    section {
+      padding: 2rem;
+      border-bottom: 1px solid #eee;
+    }
+    h2 {
+      color: #5b5fc7;
+    }
+    ul {
+      list-style-type: square;
+      padding-left: 1.5rem;
+    }
+    .project {
+      margin-bottom: 1.2rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f9f9ff;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Your Name</h1>
-    <p>Software Developer | Web Enthusiast</p>
+    <h1>Hari Kiran K</h1>
+    <p>ML | Big Data | Full Stack Developer</p>
+    <p>Bengaluru, Karnataka | +91 8050398696 | <a href="mailto:hari080kiran@gmail.com">hari080kiran@gmail.com</a></p>
+    <p><a href="https://www.linkedin.com/in/hari-kiran-k-438052243">LinkedIn Profile</a></p>
   </header>
-  
-  <section id="skills">
-    <h2>Skills</h2>
+
+  <section>
+    <h2>Education</h2>
+    <p><strong>PES University</strong> (2022–present) – B.Tech in CSE – CGPA: 8.12</p>
+    <p><strong>JNV</strong> (2016–2022) – 12th PCMC – 89.3%</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <p><strong>Swajyoth Technologies Pvt. Ltd</strong> – Intern (June–Aug 2024)</p>
     <ul>
-      <li>HTML/CSS</li>
-      <li>JavaScript</li>
-      <li>Python</li>
-      <li>React</li>
+      <li>Designed a prototype university DB using MySQL</li>
+      <li>Led the DB design team using DBMS principles</li>
     </ul>
   </section>
 
-  <section id="experience">
-    <h2>Experience</h2>
-    <p>Company XYZ - Frontend Developer</p>
-    <p>Built dynamic web applications using React and JavaScript...</p>
+  <section>
+    <h2>Skills</h2>
+    <p><strong>Languages:</strong> C++, C, Python, Go, R, HTML & CSS, MySQL</p>
+    <p><strong>Technologies:</strong> ML, Big Data, Analytics, DBMS, Map-Reduce</p>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <div class="project">
+      <strong>Distributed File Orchestration</strong>
+      <p>Remote storage system using Python & TCP (FTP-style).</p>
+    </div>
+    <div class="project">
+      <strong>Job on Board</strong>
+      <p>LinkedIn-style MERN + MySQL app for student recruitment.</p>
+    </div>
+    <div class="project">
+      <strong>Guess The Word Game</strong>
+      <p>Multiplayer game using TCP + SSL (Python).</p>
+    </div>
+    <div class="project">
+      <strong>E-Commerce Site</strong>
+      <p>Full-stack fashion store (MERN) with auth & cart.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Certification</h2>
+    <ul>
+      <li>Problem Solving (Intermediate) – Python – HackerRank</li>
+    </ul>
   </section>
 
   <footer>
-    <p>Contact me at: <a href="mailto:nayeemathewriter@gmail.com">nayeemathewriter@gmail.com</a></p>
+    &copy; 2025 Hari Kiran K. All rights reserved.
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>

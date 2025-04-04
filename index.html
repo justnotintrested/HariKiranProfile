@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hari Kiran K – Interactive Resume</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -15,6 +17,14 @@
       background: linear-gradient(135deg, #e0eafc, #cfdef3);
       color: #222;
       overflow-x: hidden;
+    }
+    #tsparticles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
     header {
       background: linear-gradient(135deg, #c1c8ff, #c6f3f1);
@@ -72,7 +82,6 @@
     a:hover {
       text-decoration: underline;
     }
-    /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -90,9 +99,15 @@
       opacity: 1;
       transform: translateY(0);
     }
+    .chart-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
   </style>
 </head>
 <body>
+  <div id="tsparticles"></div>
   <header>
     <h1>Hari Kiran K</h1>
     <p>ML | Big Data | Full Stack Developer</p>
@@ -119,6 +134,9 @@
     <h2>Skills</h2>
     <p><strong>Languages:</strong> C++, C, Python, Go, R, HTML & CSS, MySQL</p>
     <p><strong>Technologies:</strong> ML, Big Data, Analytics, DBMS, Map-Reduce</p>
+    <div class="chart-container">
+      <canvas id="skillsChart"></canvas>
+    </div>
   </section>
 
   <section class="animated-section">
@@ -142,9 +160,11 @@
   </section>
 
   <section class="animated-section">
-    <h2>Certification</h2>
+    <h2>Certifications & Achievements</h2>
     <ul>
       <li>Problem Solving (Intermediate) – Python – HackerRank</li>
+      <li>Distinction Award (4x) – PES University</li>
+      <li>Top performer in college-level coding contests</li>
     </ul>
   </section>
 
@@ -162,6 +182,51 @@
     });
     document.querySelectorAll('.animated-section').forEach(section => {
       observer.observe(section);
+    });
+
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      background: {
+        color: "transparent"
+      },
+      particles: {
+        number: { value: 50 },
+        color: { value: ["#c1c8ff", "#b3f1f0"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 80 }
+        }
+      },
+      detectRetina: true
+    });
+
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Python', 'C++', 'MySQL', 'ML', 'Big Data', 'Web Dev'],
+        datasets: [{
+          label: 'Skill Level',
+          data: [9, 8, 8, 9, 8, 7],
+          backgroundColor: 'rgba(138, 180, 248, 0.2)',
+          borderColor: '#5b5fc7',
+          pointBackgroundColor: '#5b5fc7',
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { r: { suggestedMin: 0, suggestedMax: 10 } }
+      }
     });
   </script>
 </body>
